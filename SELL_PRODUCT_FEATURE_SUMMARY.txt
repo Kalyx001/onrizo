@@ -1,0 +1,315 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║            💰 "SELL THIS PRODUCT" AFFILIATE FEATURE - COMPLETE                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+✅ WHAT'S BEEN IMPLEMENTED
+═══════════════════════════════════════════════════════════════════════════════
+
+1. "SELL THIS PRODUCT" BUTTON
+   └─ Appears on every product in the modal/details view
+   └─ Styled with gradient background and icon (💰)
+   └─ Triggers affiliate link generation
+
+2. AFFILIATE LOGIN REQUIREMENT
+   └─ Checks if user is logged in as affiliate
+   └─ If NOT logged in:
+      ├─ Shows confirmation dialog
+      ├─ Redirects to affiliate_login.php
+      └─ User can register for free
+   
+   └─ If logged in:
+      ├─ Shows affiliate panel
+      ├─ Displays affiliate link generation form
+      └─ Allows link sharing & testing
+
+3. AFFILIATE LINK GENERATION
+   └─ File: generate_affiliate_link.php
+   └─ Checks affiliate session
+   └─ Creates unique referral link
+   └─ Format: http://site.com/?ref=REFCODE&product=ID
+   └─ Logs link generation in database
+
+4. LINK DISPLAY & SHARING
+   ├─ Copy Link button - Copy to clipboard
+   ├─ Share button - Share via messaging apps
+   └─ Test Link button - Verify the affiliate link works
+
+
+🔄 USER FLOW
+═══════════════════════════════════════════════════════════════════════════════
+
+SCENARIO 1: User NOT Logged In
+─────────────────────────────────────────────────────────────────────────────
+1. User browses products on store
+2. Sees product details
+3. Clicks "💰 Sell this product" button
+4. System checks: Is user logged in as affiliate?
+5. RESULT: NO → Confirmation dialog appears
+6. User clicks "OK" to register
+7. Redirected to affiliate_login.php
+8. User registers (free, takes 2 minutes)
+9. Returns to product and tries again
+10. NOW SUCCESS! Link is generated
+
+
+SCENARIO 2: User Already Logged In as Affiliate
+─────────────────────────────────────────────────────────────────────────────
+1. User browses products on store
+2. Sees product details
+3. Clicks "💰 Sell this product" button
+4. System checks: Is user logged in as affiliate?
+5. RESULT: YES → Affiliate panel opens
+6. Panel shows:
+   ├─ Commission percentage for product
+   ├─ Input fields for name/contact (optional)
+   └─ "Generate Affiliate Link" button
+7. User clicks "Generate Affiliate Link"
+8. Affiliate link is created:
+   ├─ Unique referral code included
+   ├─ Product ID included
+   └─ Ready for sharing
+9. User has 3 options:
+   ├─ Copy Link → Share manually
+   ├─ Share → Direct share to apps
+   └─ Test Link → Verify it works
+
+
+FILES CREATED/MODIFIED
+═══════════════════════════════════════════════════════════════════════════════
+
+NEW FILES:
+┌────────────────────────────────────────────────────────────────────────────┐
+│ generate_affiliate_link.php (NEW)                                          │
+│ ├─ Checks affiliate login status                                           │
+│ ├─ Retrieves affiliate referral code                                       │
+│ ├─ Gets product details                                                    │
+│ ├─ Generates unique affiliate link                                         │
+│ ├─ Logs in database for tracking                                           │
+│ └─ Returns JSON with link and product info                                 │
+│                                                                             │
+│ sell_products_guide.html (NEW)                                             │
+│ └─ Complete guide on how to use "Sell this product" feature                │
+│    ├─ Step-by-step instructions                                            │
+│    ├─ Feature overview                                                     │
+│    ├─ Commission examples                                                  │
+│    ├─ FAQ section                                                          │
+│    └─ Link to registration page                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+MODIFIED FILES:
+┌────────────────────────────────────────────────────────────────────────────┐
+│ script.js (UPDATED)                                                        │
+│ ├─ Added "Sell this product" button to product modal                       │
+│ ├─ Added affiliate login check when button clicked                         │
+│ ├─ Added link generation handler                                           │
+│ ├─ Added copy link functionality                                           │
+│ ├─ Added share functionality                                               │
+│ ├─ Improved UI with gradient button styling                                │
+│ ├─ Added error handling and user feedback                                  │
+│ └─ Added test link functionality                                           │
+└────────────────────────────────────────────────────────────────────────────┘
+
+
+🎯 HOW IT WORKS - TECHNICAL DETAILS
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: User clicks "Sell this product" button
+────────────────────────────────────────────────────────────────────────────
+✓ JavaScript handler triggered
+✓ fetch() call to generate_affiliate_link.php
+✓ Sends: ?product_id=X
+
+STEP 2: generate_affiliate_link.php checks affiliation status
+────────────────────────────────────────────────────────────────────────────
+✓ Checks $_SESSION['affiliate_logged_in']
+✓ If not logged in: Returns { success: false, redirect: 'affiliate_login.php' }
+✓ If logged in: Continues to step 3
+
+STEP 3: Retrieve affiliate information
+────────────────────────────────────────────────────────────────────────────
+✓ Query: SELECT referral_code, name FROM affiliates WHERE id = ?
+✓ Gets affiliate's unique referral code
+
+STEP 4: Generate affiliate link
+────────────────────────────────────────────────────────────────────────────
+✓ Base URL: http://localhost/onrizo/
+✓ Format: base_url + /?ref= + referral_code + &product= + product_id
+✓ Example: http://localhost/onrizo/?ref=ABC12345&product=5
+
+STEP 5: Log link generation
+────────────────────────────────────────────────────────────────────────────
+✓ INSERT INTO affiliate_clicks
+✓ affiliate_id, product_id, product_name, status='link_generated'
+
+STEP 6: Return to frontend
+────────────────────────────────────────────────────────────────────────────
+✓ JSON response with:
+  ├─ success: true
+  ├─ affiliate_link: generated link
+  ├─ product_name: name of product
+  ├─ product_price: price
+  ├─ affiliate_name: affiliate's name
+  └─ referral_code: affiliate's code
+
+STEP 7: Display link to user
+────────────────────────────────────────────────────────────────────────────
+✓ Show affiliate panel with:
+  ├─ Commission percentage
+  ├─ Affiliate link in text field
+  ├─ Copy button
+  ├─ Share button
+  └─ Test Link button
+
+
+📱 USER INTERFACE
+═══════════════════════════════════════════════════════════════════════════════
+
+PRODUCT MODAL (when viewing product details):
+┌──────────────────────────────────────────────────────────────────────────┐
+│                          Product Name                                    │
+│  [Product Images]                                                        │
+│  KES 5,000                                                               │
+│  ┌─────────────────────────────────────────────────────────────────────┐│
+│  │ [Order on WhatsApp] [Add to Cart] [💰 Sell this product]           ││
+│  └─────────────────────────────────────────────────────────────────────┘│
+│                                                                          │
+│  Affiliate percent: 15%                                                 │
+│  ┌─────────────────────────────────────────────────────────────────────┐│
+│  │ [Your name]                  [Phone/Email]                         ││
+│  │                                                                     ││
+│  │ [Generate Affiliate Link]                                          ││
+│  │                                                                     ││
+│  │ ✓ Link generated successfully!                                     ││
+│  │                                                                     ││
+│  │ Your Affiliate Link:                                               ││
+│  │ [http://site.com/?ref=ABC123&product=5           ] (text field)   ││
+│  │                                                                     ││
+│  │ [📋 Copy Link] [📱 Share] [🛒 Test Link]                           ││
+│  └─────────────────────────────────────────────────────────────────────┘│
+└──────────────────────────────────────────────────────────────────────────┘
+
+
+🔐 SECURITY FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Session-based authentication (affiliate must be logged in)
+✓ Prepared statements in database queries (SQL injection prevention)
+✓ Input validation on all fields
+✓ Error handling with user-friendly messages
+✓ Unique referral codes per affiliate
+✓ Referral code included in URL for tracking
+
+
+💡 WORKFLOW EXAMPLE
+═══════════════════════════════════════════════════════════════════════════════
+
+REAL SCENARIO:
+─────────────────────────────────────────────────────────────────────────────
+
+1. John registers as affiliate at affiliate_login.php
+   └─ Gets referral code: JOHN5678
+
+2. John visits store and browses products
+   └─ Finds iPhone priced at 5,000 KES
+
+3. John clicks "💰 Sell this product" button
+   └─ John is logged in as affiliate
+
+4. Affiliate panel opens
+   └─ Shows "Commission: 15%"
+
+5. John clicks "Generate Affiliate Link"
+   └─ Generated link: http://site.com/?ref=JOHN5678&product=123
+
+6. John clicks "📋 Copy Link"
+   └─ Link copied to clipboard
+
+7. John shares link on WhatsApp to his friend Mary
+   └─ Text: "Check out this iPhone: http://site.com/?ref=JOHN5678&product=123"
+
+8. Mary clicks the link
+   └─ affiliate_tracker.php logs the click
+   └─ Mary's session gets: affiliate_id_ref = john_id
+   └─ Mary adds iPhone to cart
+
+9. Mary completes purchase (5,000 KES)
+   └─ Order saved
+
+10. processAffiliateCommission() is called
+    └─ Calculation: 5,000 × 15% = 750 KES
+    └─ Added to John's balance
+    └─ John sees 750 KES in his dashboard
+
+11. John requests withdrawal of 750 KES
+    └─ Withdrawal created in database
+    └─ Status: pending
+
+12. Admin approves withdrawal
+    └─ Status: paid
+    └─ John receives 750 KES via M-Pesa or Bank
+
+
+🔗 QUICK LINKS
+═══════════════════════════════════════════════════════════════════════════════
+
+For Affiliates:
+  • Affiliate Registration: http://localhost/onrizo/affiliate_login.php
+  • Affiliate Dashboard: http://localhost/onrizo/affiliate_dashboard.php
+  • How to Sell Guide: http://localhost/onrizo/sell_products_guide.html
+
+For Developers:
+  • Link Generator: http://localhost/onrizo/generate_affiliate_link.php
+  • Updated Script: http://localhost/onrizo/script.js
+  • Main Store: http://localhost/onrizo/index.html
+
+
+📊 TRACKING & ANALYTICS
+═══════════════════════════════════════════════════════════════════════════════
+
+When user generates affiliate link, system tracks:
+├─ link_generated: When the link was first created
+├─ pending: When user clicks the link
+├─ confirmed: When purchase is completed
+└─ All visible in affiliate dashboard
+
+
+🚀 GETTING STARTED
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Visit any product on the store
+2. Click product to see details
+3. Look for "💰 Sell this product" button
+4. If not logged in: Click to register
+5. If logged in: Click to generate your affiliate link
+6. Copy and share your link
+7. Earn 15% commission on every sale!
+
+
+✨ FEATURE HIGHLIGHTS
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ One-click link generation
+✓ No manual URL construction needed
+✓ Automatic referral code tracking
+✓ Real-time earnings updates
+✓ Copy-to-clipboard functionality
+✓ Share to messaging apps
+✓ Test link verification
+✓ Error handling & user feedback
+✓ Mobile responsive design
+✓ Works on desktop, tablet, mobile
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                    ✅ READY FOR PRODUCTION USE
+═══════════════════════════════════════════════════════════════════════════════
+
+Version: 1.0
+Status: Complete & Tested
+Date: January 20, 2026
+
+Users can now click any product's "Sell this product" button to instantly
+generate their personal affiliate link for earning commissions!
+
+═══════════════════════════════════════════════════════════════════════════════

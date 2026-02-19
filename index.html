@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Discover smartphones, laptops, and tablets at Orizo Shop.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onrizo Shop - Smartphones, Tablets & Laptops</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="pageLoader" class="active">
+    <div>
+      <div class="spinner"></div>
+      <div class="loader-text">Loading...</div>
+    </div>
+  </div>
+
+<header>
+  <div class="header-top">
+    <img src="pics/logo.png" alt="Orizo Shop Logo" class="logo">
+  </div>
+  <div class="header-middle">
+    <h1>We<span id="text"></span><span class="cursor">|</span></h1>
+  </div>
+  <a href="admin/login.php" class="admin-btn" id="adminBtn" title="Admin" aria-label="Admin">
+    <!-- person/user SVG icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+  </a>
+  <div class="header-bottom">
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <nav id="nav">
+  <ul>
+    <li><a href="#" class="category-link active" data-category="All">All</a></li>
+    <li><a href="#" class="category-link" data-category="Smartwatches">Watches & Jewelery</a></li>
+    <li><a href="#" class="category-link" data-category="Cameras">Cameras</a></li>
+    <li><a href="#" class="category-link" data-category="Accessories">Accessories</a></li>
+    <li><a href="#" class="category-link" data-category="Laptops">Computers & Laptops</a></li>
+    <li><a href="#" class="category-link" data-category="Smartphones">Phones & spares</a></li>
+    <li><a href="#" class="category-link" data-category="Tablets">Tablets</a></li>
+      <li><a href="#" class="category-link" data-category="Tech">Tech-Gadgets</a></li>
+      <li><a href="#" class="category-link" data-category="Gaming">Gaming</a></li>
+    <li><a href="#" class="category-link" data-category="Loan Items">Loan Items</a></li>
+  </ul>
+</nav>
+
+</header>
+
+
+<main>
+    <!-- Advertisement Section -->
+    <div id="advertisementSection" class="advertisement-section">
+        <img src="pics/banner.png" alt="Ad 1">
+        <img src="pics/banner1.png" alt="Ad 2">
+    </div>
+
+   <!-- Search bar -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search products..." />
+  <button id="locationBtn" class="location-btn" title="Near me" aria-label="Near me">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 1 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+    <span>Near me</span>
+  </button>
+  <div id="locationFilters" class="location-filters hidden">
+    <select id="countySelect" class="location-select" aria-label="Select county">
+      <option value="">All counties</option>
+    </select>
+    <select id="subcountySelect" class="location-select" aria-label="Select sub-county">
+      <option value="">All sub-counties</option>
+    </select>
+  </div>
+</div>
+    
+  <a href="cart.html" id="floatingCart">🛒 Cart (<span id="cartCount">0</span>)</a>
+
+ <!-- Products will appear here -->
+    <div id="products" class="products-section"></div>
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+</main>
+
+<footer>
+  <div class="footer-container">
+    
+    <!-- Brand / About -->
+    <div class="footer-section about">
+      <h3>Onrizo Shop</h3>
+      <p>Discover top-quality smartphones, laptops, and tablets at unbeatable prices. 
+      We connect you directly with verified sellers for a smooth buying experience.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+          <li><a href="#">Smartphones</a></li>
+          <li><a href="#">Laptops</a></li>
+          <li><a href="#">Tablets</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-section contact">
+      <h4>Contact Us</h4>
+      <p><strong>Email:</strong> onrizo@gmail.com</p>
+      <p><strong>Phone:</strong> +254115900068</p>
+      <div class="social-icons">
+        <a href="#"><img src="pics/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="pics/instagram.png" alt="Instagram"></a>
+        <a href="#"><img src="pics/whatsapp.png" alt="WhatsApp"></a>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-section newsletter">
+      <h4>Join Our Newsletter</h4>
+      <p>Stay updated on new deals and offers!</p>
+      <form id="newsletterForm">
+        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Onrizo Shop. All rights reserved.</p>
+  </div>
+</footer>
+
+
+<script src="loader.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onrizo Affiliate System - Quick Access</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 48px;
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .card a, .card button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+        .card a:hover, .card button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-size: 28px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .feature-item {
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .feature-item strong {
+            color: #667eea;
+            font-size: 16px;
+        }
+        .feature-item p {
+            color: #666;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+        .status {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            .grid { grid-template-columns: 1fr; }
+            .subtitle { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <h1>🎯 Onrizo Affiliate System</h1>
+        <p class="subtitle">Complete affiliate dashboard that merges with your store</p>
+
+        <!-- QUICK ACCESS -->
+        <div class="grid">
+            <!-- Affiliate Dashboard -->
+            <div class="card">
+                <div class="card-icon">💰</div>
+                <h3>Affiliate Dashboard</h3>
+                <p>Login to your affiliate account and track earnings, referrals, and payments.</p>
+                <a href="affiliate_login.php">Access Dashboard →</a>
+            </div>
+
+            <!-- Admin Panel -->
+            <div class="card">
+                <div class="card-icon">🔧</div>
+                <h3>Admin Panel</h3>
+                <p>Manage affiliates, view statistics, and process payments.</p>
+                <a href="admin_affiliates.php">View Admin Panel →</a>
+            </div>
+
+            <!-- Documentation -->
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>Documentation</h3>
+                <p>Read complete setup guides and API reference.</p>
+                <button onclick="showDocs()">View Docs ↓</button>
+            </div>
+        </div>
+
+        <!-- STATUS & INFO -->
+        <div class="section">
+            <h2>✅ System Status</h2>
+            <div class="status">✓ Production Ready</div>
+            
+            <p style="color: #666; margin-bottom: 20px;">Your affiliate system is fully built and ready to deploy. All components are integrated and documented.</p>
+            
+            <h3 style="color: #333; margin-top: 25px; margin-bottom: 15px;">🚀 3-Step Quick Start</h3>
+            <div style="background: #f0f4ff; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea;">
+                <ol style="margin-left: 20px; color: #333;">
+                    <li style="margin-bottom: 12px;"><strong>Run Database Setup</strong><br/>
+                        <code style="background: #fff; padding: 4px 8px; border-radius: 4px; font-family: monospace;">mysql -u root onrizo_db &lt; affiliate_setup.sql</code>
+                    </li>
+                    <li style="margin-bottom: 12px;"><strong>Test Affiliate Registration</strong><br/>
+                        Visit <code style="background: #fff; padding: 4px 8px; border-radius: 4px; font-family: monospace;">http://localhost/onrizo/affiliate_login.php</code>
+                    </li>
+                    <li><strong>Integrate with Store</strong><br/>
+                        Add 3 lines of code to your order processing (see documentation)
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="section">
+            <h2>⭐ Key Features</h2>
+            <div class="features">
+                <div class="feature-item">
+                    <strong>💼 Affiliate Dashboard</strong>
+                    <p>View earnings, referrals, sales history, and manage profile</p>
+                </div>
+                <div class="feature-item">
+                    <strong>🔗 Referral Links</strong>
+                    <p>Unique referral code with copy-to-clipboard sharing</p>
+                </div>
+                <div class="feature-item">
+                    <strong>📊 Real-Time Analytics</strong>
+                    <p>Live earnings tracking with monthly charts</p>
+                </div>
+                <div class="feature-item">
+                    <strong>💰 Easy Withdrawals</strong>
+                    <p>Request payments via M-Pesa or Bank (min 500 KES)</p>
+                </div>
+                <div class="feature-item">
+                    <strong>🔒 Secure Authentication</strong>
+                    <p>Password hashing, SQL injection protection, session security</p>
+                </div>
+                <div class="feature-item">
+                    <strong>📱 Mobile Responsive</strong>
+                    <p>Works perfectly on desktop, tablet, and mobile</p>
+                </div>
+                <div class="feature-item">
+                    <strong>🛠️ Admin Panel</strong>
+                    <p>Manage affiliates, view stats, and process payments</p>
+                </div>
+                <div class="feature-item">
+                    <strong>📈 Commission Tracking</strong>
+                    <p>Automatic calculation and balance updates</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILES CREATED -->
+        <div class="section">
+            <h2>📦 Files Created</h2>
+            
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">🎨 Frontend</h3>
+            <div class="feature-item">
+                <strong>affiliate_login.php</strong>
+                <p>Beautiful login/registration interface with tab switching</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_dashboard.php</strong>
+                <p>Main dashboard with earnings, referrals, payments, and profile tabs</p>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">⚙️ Backend APIs</h3>
+            <div class="feature-item">
+                <strong>affiliate_order_integration.php</strong>
+                <p>Helper functions for processing commissions in your order code</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_update_profile.php</strong>
+                <p>API for updating affiliate profile information</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_request_withdrawal.php</strong>
+                <p>API for creating withdrawal requests</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_tracker.php</strong>
+                <p>Tracking script for referral clicks</p>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">🔧 Admin</h3>
+            <div class="feature-item">
+                <strong>admin_affiliates.php</strong>
+                <p>Admin dashboard for affiliate management and statistics</p>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">📚 Documentation</h3>
+            <div class="feature-item">
+                <strong>AFFILIATE_SYSTEM_GUIDE.md</strong>
+                <p>Complete reference guide with all details</p>
+            </div>
+            <div class="feature-item">
+                <strong>AFFILIATE_IMPLEMENTATION.md</strong>
+                <p>Step-by-step implementation and integration guide</p>
+            </div>
+            <div class="feature-item">
+                <strong>AFFILIATE_README.md</strong>
+                <p>Project overview and summary</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_setup.sql</strong>
+                <p>Database schema with all tables and indexes</p>
+            </div>
+        </div>
+
+        <!-- DATABASE -->
+        <div class="section">
+            <h2>💾 Database Tables</h2>
+            <p style="color: #666; margin-bottom: 20px;">6 optimized tables created with proper indexes:</p>
+            
+            <div class="feature-item">
+                <strong>affiliates</strong>
+                <p>Account info, balances, earnings, referral codes</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_clicks</strong>
+                <p>Referrals, sales, commissions, status tracking</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_payments</strong>
+                <p>Withdrawal requests, payment history, status</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_products</strong>
+                <p>Commission rates per product</p>
+            </div>
+            <div class="feature-item">
+                <strong>affiliate_settings</strong>
+                <p>Global configuration settings</p>
+            </div>
+        </div>
+
+        <!-- COMMISSION FLOW -->
+        <div class="section">
+            <h2>💡 How It Works</h2>
+            <div class="code-block">
+┌─ Affiliate gets unique referral link
+│  └─ http://site.com/?ref=ABC123&product=5
+│
+├─ Shares with friends/social media
+│
+├─ Friend clicks link
+│  └─ Click tracked automatically
+│
+├─ Friend adds items to cart & checks out
+│  └─ Affiliate ID stored in session
+│
+├─ Order is completed
+│  └─ 15% commission calculated
+│  └─ Amount added to affiliate balance
+│
+├─ Affiliate sees earnings in dashboard
+│  └─ Real-time update
+│  └─ Added to monthly chart
+│
+└─ Affiliate requests withdrawal (min 500 KES)
+   └─ Admin approves
+   └─ Paid via M-Pesa or Bank
+            </div>
+        </div>
+
+        <!-- INTEGRATION -->
+        <div class="section">
+            <h2>🔌 Integration (3 Lines of Code)</h2>
+            <p style="color: #666; margin-bottom: 20px;">Add this to your save_order.php after order is saved:</p>
+            <div class="code-block">
+include 'affiliate_order_integration.php';
+if (isset($_SESSION['affiliate_id_ref'])) {
+    processAffiliateCommission($order_id, $product_id, $total_amount, $product_name);
+}
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="text-align: center; color: white; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="font-size: 14px; margin-bottom: 10px;">🚀 Affiliate System v1.0 | Production Ready | January 2026</p>
+            <p style="font-size: 12px; opacity: 0.9;">For detailed documentation, see AFFILIATE_SYSTEM_GUIDE.md</p>
+        </div>
+    </div>
+
+    <script>
+        function showDocs() {
+            alert('Documentation files available:\n\n📘 AFFILIATE_SYSTEM_GUIDE.md - Complete reference\n📗 AFFILIATE_IMPLEMENTATION.md - Setup guide\n📙 AFFILIATE_README.md - Project summary');
+        }
+    </script>
+</body>
+</html>

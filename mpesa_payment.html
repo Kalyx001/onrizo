@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pay with M-Pesa - Onrizo Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .payment-box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      background: #34b233;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #2a8d29;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-box">
+    <h2>M-Pesa Payment</h2>
+    <p>Total Amount: <strong id="amount"></strong> KES</p>
+    <form id="mpesaForm" method="POST" action="stk_push.php">
+      <input type="hidden" name="amount" id="amountInput" />
+      <input type="tel" name="phone" placeholder="Enter your M-Pesa number (254...)" required />
+      <button type="submit">Pay Now</button>
+    </form>
+    <p style="margin-top:15px;"><a href="checkout.html">← Back</a></p>
+  </div>
+
+  <script>
+    const total = localStorage.getItem("checkoutTotal") || 0;
+    document.getElementById("amount").textContent = Number(total).toLocaleString();
+    document.getElementById("amountInput").value = total;
+  </script>
+</body>
+</html>

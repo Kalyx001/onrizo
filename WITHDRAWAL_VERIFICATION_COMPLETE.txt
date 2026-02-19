@@ -1,0 +1,434 @@
+✅ WITHDRAWAL VALIDATION & VERIFICATION SYSTEM
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 SYSTEM OVERVIEW
+─────────────────────────────────────────────────────────────────────────────
+
+A complete withdrawal request validation system where:
+
+✅ Withdrawal requests are submitted by admin users
+✅ Requests appear in Main Dashboard for verification
+✅ Admin can VERIFY or REJECT each request
+✅ Affiliate/Admin dashboard shows real-time status updates
+✅ Complete audit trail with timestamps
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 WHAT WAS BUILT
+─────────────────────────────────────────────────────────────────────────────
+
+1. STORE DASHBOARD - NEW "💸 WITHDRAWALS" TAB (Tab #7)
+   ├─ Shows all pending withdrawal requests
+   ├─ Displays: Name, Email, Amount, Destination, Status, Date
+   ├─ Two action buttons per request:
+   │  ├─ "✓ Verify" (Green) - Approves withdrawal
+   │  └─ "✗ Reject" (Red)   - Rejects withdrawal
+   ├─ Shows count of pending withdrawals
+   └─ Auto-updates without page refresh
+
+2. AFFILIATE DASHBOARD - NEW "💸 WITHDRAWALS" TAB (Tab #4)
+   ├─ Shows withdrawal request history
+   ├─ "💸 Request New Withdrawal" button
+   ├─ Table with columns:
+   │  ├─ Amount (KES)
+   │  ├─ Destination (phone/account)
+   │  ├─ Status (Reserved, Verified, Paid, Rejected)
+   │  ├─ Requested date/time
+   │  ├─ Admin Status (descriptive text)
+   │  └─ Processing Notes
+   ├─ Color-coded status badges
+   │  ├─ 🟡 Reserved (Pending admin review)
+   │  ├─ 🟢 Verified (Admin approved, queued for payment)
+   │  ├─ 🔵 Paid (Payment completed)
+   │  └─ 🔴 Rejected (Admin rejected, balance restored)
+   └─ Auto-updates when admin verifies/rejects
+
+3. BACK-END PROCESSING
+   ├─ verify_withdrawal action
+   │  ├─ Updates status to 'Verified'
+   │  ├─ Sets processed_at timestamp
+   │  └─ Shows success message
+   ├─ reject_withdrawal action
+   │  ├─ Updates status to 'Rejected'
+   │  ├─ Restores balance to admin/affiliate
+   │  ├─ Sets processed_at timestamp
+   │  └─ Shows success message
+   └─ Both actions fully isolated and secure
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔄 COMPLETE WITHDRAWAL WORKFLOW
+─────────────────────────────────────────────────────────────────────────────
+
+STEP 1: REQUEST SUBMITTED
+│
+├─ User requests withdrawal from their account
+├─ Amount: Specified by user
+├─ Destination: Phone number (M-Pesa) or Bank account
+├─ Created: New record in withdrawals table
+├─ Status: 'Reserved'
+├─ Database: auto_id = 7, admin_id = 14, amount = 300000, status = 'Reserved'
+└─ Visible: Only to main admin in store dashboard
+
+                            ↓
+
+STEP 2: ADMIN RECEIVES IN MAIN DASHBOARD
+│
+├─ Admin opens: http://localhost/onrizo/admin/store_dashboard.php
+├─ Clicks: "💸 Withdrawals" tab
+├─ Sees: Pending withdrawal with:
+│  ├─ User: kaliakalyx@gmail.com
+│  ├─ Amount: KES 300,000.00
+│  ├─ Destination: 0115900068 (M-Pesa)
+│  ├─ Status: Reserved
+│  ├─ Requested: 2026-01-20 17:05:18
+│  └─ Buttons: [✓ Verify] [✗ Reject]
+└─ Decision: Admin chooses VERIFY or REJECT
+
+                            ↓
+
+STEP 3a: ADMIN VERIFIES (APPROVES)
+│
+├─ Admin clicks: [✓ Verify]
+├─ Action: No confirmation needed
+├─ Database Update:
+│  ├─ UPDATE withdrawals SET status = 'Verified'
+│  ├─ UPDATE withdrawals SET processed_at = NOW()
+│  └─ Balance: Remains deducted
+├─ Admin sees: "✅ Withdrawal verified! KES 300,000 ready for processing"
+├─ Status: 'Verified' (Green badge)
+└─ Next step: Manual payment processing by admin
+
+                            ↓
+
+STEP 3b: ADMIN REJECTS (ALTERNATIVE)
+│
+├─ Admin clicks: [✗ Reject]
+├─ Dialog: "Reject this withdrawal?" (confirmation)
+├─ Admin confirms: Click OK
+├─ Database Update:
+│  ├─ UPDATE withdrawals SET status = 'Rejected'
+│  ├─ UPDATE withdrawals SET processed_at = NOW()
+│  ├─ UPDATE affiliates SET balance = balance + 300000
+│  └─ Balance: RESTORED to account
+├─ Admin sees: "❌ Withdrawal rejected! KES 300,000 restored to account"
+├─ Status: 'Rejected' (Red badge)
+└─ User can: Request withdrawal again
+
+                            ↓
+
+STEP 4: AFFILIATE/ADMIN SEES STATUS UPDATE
+│
+├─ Open: affiliate_dashboard.php (or admin portal)
+├─ Click: "💸 Withdrawals" tab
+├─ See: Withdrawal history with real-time status
+│
+├─ IF VERIFIED:
+│  ├─ Status: "✅ Verified - Processing"
+│  ├─ Badge: Green
+│  ├─ Admin Status: "Admin approved • Queued for payment"
+│  ├─ Notes: Detailed processing information
+│  └─ Awaiting: Manual payment processing
+│
+├─ IF REJECTED:
+│  ├─ Status: "❌ Rejected"
+│  ├─ Badge: Red
+│  ├─ Admin Status: "Admin rejected • Balance restored"
+│  ├─ Notes: "Your withdrawal has been declined"
+│  └─ Result: Balance returned to account
+│
+└─ Updates: Automatic without page refresh
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💾 DATABASE STRUCTURE
+─────────────────────────────────────────────────────────────────────────────
+
+Table: withdrawals
+
+Columns:
+  ├─ id (Primary Key)
+  │  └─ Value: 7
+  ├─ admin_id (User ID - affiliate or admin)
+  │  └─ Value: 14 (kaliakalyx@gmail.com)
+  ├─ amount (Withdrawal amount)
+  │  └─ Value: 300000.00
+  ├─ destination (M-Pesa/Bank account)
+  │  └─ Value: 0115900068
+  ├─ status (Withdrawal status)
+  │  ├─ Value: 'Reserved' (current)
+  │  ├─ Can be: 'Verified', 'Paid', 'Rejected'
+  │  └─ Initial: Always 'Reserved'
+  ├─ transaction_id (Payment reference - optional)
+  │  └─ Value: NULL (filled when paid)
+  ├─ requested_at (When request was made)
+  │  └─ Value: 2026-01-20 17:05:18
+  └─ processed_at (When admin verified/rejected)
+     └─ Value: NULL (filled on admin action)
+
+Status Values:
+  ├─ 'Reserved'  → Waiting for admin review (INITIAL)
+  ├─ 'Verified'  → Admin approved, queued for payment
+  ├─ 'Paid'      → Payment completed successfully
+  └─ 'Rejected'  → Admin rejected, balance restored
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🏪 MAIN ADMIN DASHBOARD - WITHDRAWALS TAB
+─────────────────────────────────────────────────────────────────────────────
+
+URL: http://localhost/onrizo/admin/store_dashboard.php
+Tab: "💸 Withdrawals" (Click to view)
+
+Display:
+  ├─ Title: "Pending Withdrawals (1)" ← Shows count
+  ├─ Table Header:
+  │  ├─ Affiliate (User name)
+  │  ├─ Email (User email)
+  │  ├─ Amount (KES formatted)
+  │  ├─ Destination (Phone/Account)
+  │  ├─ Status (Current status)
+  │  ├─ Requested (Date/Time requested)
+  │  └─ Action (Buttons)
+  │
+  ├─ Table Row (Example):
+  │  ├─ Affiliate: kaliakalyx@gmail.com
+  │  ├─ Email: kaliakalyx@gmail.com
+  │  ├─ Amount: KES 300,000
+  │  ├─ Destination: 0115900068
+  │  ├─ Status: Reserved (yellow badge)
+  │  ├─ Requested: 20 Jan 2026, 17:05
+  │  └─ Action: [✓ Verify] [✗ Reject]
+  │
+  └─ Empty State: "No pending withdrawals" (if none)
+
+Actions:
+  ├─ VERIFY (Green Button)
+  │  ├─ Click to approve withdrawal
+  │  ├─ Status → 'Verified'
+  │  ├─ Message: "✅ Withdrawal verified! KES X ready for processing"
+  │  └─ User sees: Updated status immediately
+  │
+  ├─ REJECT (Red Button)
+  │  ├─ Click to deny withdrawal
+  │  ├─ Confirmation: "Reject this withdrawal?"
+  │  ├─ Status → 'Rejected'
+  │  ├─ Balance → RESTORED
+  │  ├─ Message: "❌ Withdrawal rejected! KES X restored to account"
+  │  └─ User sees: Updated status immediately
+  │
+  └─ Both: Auto-update without page refresh
+
+═══════════════════════════════════════════════════════════════════════════════
+
+👤 AFFILIATE DASHBOARD - WITHDRAWALS TAB
+─────────────────────────────────────────────────────────────────────────────
+
+URL: http://localhost/onrizo/affiliate_dashboard.php
+Tab: "💸 Withdrawals" (Click to view)
+
+Features:
+  ├─ Button: "💸 Request New Withdrawal"
+  │  └─ Opens withdrawal request modal
+  │
+  ├─ Table: "Withdrawal Requests"
+  │  ├─ Header Columns:
+  │  │  ├─ Amount (KES)
+  │  │  ├─ Destination (Phone/Account)
+  │  │  ├─ Status
+  │  │  ├─ Requested (Date/Time)
+  │  │  ├─ Admin Status (Descriptive)
+  │  │  └─ Notes (Processing info)
+  │  │
+  │  └─ Row Example:
+  │     ├─ Amount: KES 300,000
+  │     ├─ Destination: 0115900068
+  │     ├─ Status: Reserved (🟡 yellow badge)
+  │     ├─ Requested: 20 Jan 2026, 17:05
+  │     ├─ Admin Status: ⏳ Pending Admin Review
+  │     └─ Notes: "Awaiting admin verification"
+  │
+  └─ Empty State: "No withdrawal requests yet"
+
+Status Display Examples:
+
+  Reserved (🟡 YELLOW):
+    ├─ Status Badge: "Reserved"
+    ├─ Admin Status: "⏳ Pending Admin Review"
+    └─ Notes: "Awaiting admin verification"
+
+  Verified (🟢 GREEN):
+    ├─ Status Badge: "Verified"
+    ├─ Admin Status: "✅ Verified - Processing"
+    └─ Notes: "Admin approved • Queued for payment"
+
+  Paid (🔵 BLUE):
+    ├─ Status Badge: "Paid"
+    ├─ Admin Status: "🎉 Completed"
+    └─ Notes: "Processed on 20 Jan 2026"
+
+  Rejected (🔴 RED):
+    ├─ Status Badge: "Rejected"
+    ├─ Admin Status: "❌ Rejected"
+    └─ Notes: "Admin rejected • Balance restored"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔐 SECURITY IMPLEMENTATION
+─────────────────────────────────────────────────────────────────────────────
+
+✅ SQL Injection Prevention
+   - All queries use prepared statements
+   - bind_param() for all user inputs
+
+✅ Data Validation
+   - withdrawal_id cast to integer
+   - Status validation before updates
+   - Amount verification
+
+✅ Safe Operations
+   - Confirmation dialog on rejection
+   - Timestamp audit trail
+   - No direct balance manipulation
+
+✅ Transaction Integrity
+   - Status changes atomic
+   - Balance updates synchronized
+   - No orphaned records
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 CURRENT SYSTEM STATE
+─────────────────────────────────────────────────────────────────────────────
+
+Pending Withdrawals: 1
+
+ID: 7
+├─ User: kaliakalyx@gmail.com (Admin ID: 14)
+├─ Amount: KES 300,000.00
+├─ Destination: 0115900068 (M-Pesa)
+├─ Status: Reserved ⏳
+├─ Requested: 2026-01-20 17:05:18
+├─ Admin Action Needed: YES
+│  ├─ Option 1: Click [✓ Verify] to approve
+│  └─ Option 2: Click [✗ Reject] to decline
+└─ Location: store_dashboard.php → Withdrawals Tab
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ TESTING & VERIFICATION
+─────────────────────────────────────────────────────────────────────────────
+
+✅ PHP Syntax: No errors in both files
+✅ Database: Queries return correct data
+✅ UI: Tabs display correctly
+✅ Status Colors: Show correctly
+✅ Buttons: Functional
+✅ Messages: Display on action
+✅ Auto-refresh: Works without page reload
+✅ Data Persistence: Updates persist
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 HOW TO USE
+─────────────────────────────────────────────────────────────────────────────
+
+FOR MAIN ADMIN:
+
+1. Open main dashboard
+   → http://localhost/onrizo/admin/store_dashboard.php
+
+2. Click "💸 Withdrawals" tab
+
+3. Review pending withdrawal:
+   - User: kaliakalyx@gmail.com
+   - Amount: KES 300,000
+   - Destination: 0115900068
+
+4. Take action:
+   - To APPROVE: Click [✓ Verify]
+   - To DENY: Click [✗ Reject] + confirm
+
+5. See success message
+
+6. User sees status update automatically
+
+───────────────────────────────────────────────────────────────────────────────
+
+FOR AFFILIATE/USER:
+
+1. Open affiliate dashboard (if applicable)
+   → http://localhost/onrizo/affiliate_dashboard.php
+
+2. Click "💸 Withdrawals" tab
+
+3. See withdrawal request history:
+   - Status: Reserved (🟡 Pending Admin Review)
+   - Amount: KES 300,000
+   - Destination: 0115900068
+   - Requested: 2026-01-20 17:05:18
+
+4. Wait for admin verification:
+   - If approved: See "✅ Verified - Processing" (Green)
+   - If rejected: See "❌ Rejected" (Red), balance restored
+
+5. Status updates automatically without refresh
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ KEY FEATURES
+─────────────────────────────────────────────────────────────────────────────
+
+✨ Real-Time Updates
+  Status changes visible immediately without page refresh
+
+✨ Color-Coded Status
+  🟡 Yellow (Pending), 🟢 Green (Verified), 
+  🔵 Blue (Paid), 🔴 Red (Rejected)
+
+✨ Complete Audit Trail
+  All timestamps tracked (requested, processed)
+
+✨ Safe Balance Management
+  Automatic deduction on request, restoration on rejection
+
+✨ Confirmation Protection
+  Rejection requires confirmation to prevent accidents
+
+✨ User-Friendly Messages
+  Clear descriptive status and processing notes
+
+✨ Responsive Design
+  Works on desktop, tablet, mobile
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📈 WORKFLOW STATUS: ✅ COMPLETE & OPERATIONAL
+─────────────────────────────────────────────────────────────────────────────
+
+Code Quality:        ✅ VERIFIED
+Security:            ✅ IMPLEMENTED
+Testing:             ✅ PASSED
+Database:            ✅ FUNCTIONAL
+User Experience:     ✅ OPTIMIZED
+Documentation:       ✅ COMPLETE
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 READY FOR PRODUCTION USE
+
+All withdrawal requests now show in the main admin dashboard.
+Admin can easily verify or reject each request.
+User/Affiliate dashboard automatically updates with status changes.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION FILES
+─────────────────────────────────────────────────────────────────────────────
+
+1. WITHDRAWAL_SYSTEM_SUMMARY.txt (Quick overview)
+2. WITHDRAWAL_VALIDATION_SYSTEM.md (Detailed guide)
+3. This file (Complete reference)
+
+═══════════════════════════════════════════════════════════════════════════════
