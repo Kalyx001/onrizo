@@ -1,19 +1,12 @@
 <?php
-// ✅ LOCAL XAMPP DATABASE
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "onrizo_db";
+$host = getenv("DB_HOST");     // e.g., infinityfree host
+$user = getenv("DB_USER");     // your database username
+$password = getenv("DB_PASS"); // your database password
+$db = getenv("DB_NAME");       // your database name
 
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli($host, $user, $password, $db);
 
 if ($conn->connect_error) {
-    die("❌ Database connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
-
-// Set charset to utf8mb4 for better compatibility
-$conn->set_charset("utf8mb4");
-
-// Optional: confirm connection
-// echo "✅ Database connected successfully!";
 ?>
